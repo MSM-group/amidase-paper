@@ -1,1 +1,1 @@
-# paracetamol-amidase-paper
+# Scripts associated with submitted manuscript
