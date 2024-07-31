@@ -45,4 +45,4 @@ average_iqr_plot_filtered <- df_filtered %>%
 
 # Print the plot
 print(average_iqr_plot_filtered)
-ggsave("boxplot_filtered.png", plot = average_iqr_plot_filtered, width = 12, height = 18, dpi = 600)
+ggsave("output/boxplot_filtered.png", plot = average_iqr_plot_filtered, width = 12, height = 18, dpi = 600)

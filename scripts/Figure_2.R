@@ -95,7 +95,7 @@ combined_df <- combined_df %>%
 
 ## merge the control dataframe with the homolog metadata
 # Read the mapping file
-mapping <- read_xlsx("output/20240718_table_SI_p_notation.xlsx")
+mapping <- read_xlsx("data/20240718_table_SI_p_notation.xlsx")
 
 # Combine the metadata
 met <- data.frame(label = ggtreem$data$label[ggtreem$data$isTip]) %>%
