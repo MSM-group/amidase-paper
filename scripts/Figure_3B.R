@@ -123,6 +123,6 @@ plot_heatmap_with_bars <- function(data_file, width, height, label_size, output_
 
 # Example usage of the function
 data_file <- "data/screening_hits/20240708_hits_matrix_binary_df.csv"
-output_file <- "heatmap_with_bars_gradient.png"
+output_file <- "output/heatmap_with_bars_gradient.png"
 
 plot_heatmap_with_bars(data_file, width = 7, height = 9, label_size = 12, output_file = output_file)
