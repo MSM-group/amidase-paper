@@ -15,7 +15,7 @@ rawdat <- read_csv("data/machine_learning/272_enzyme_substrate_combinations_2024
 hitdat <- rawdat %>%
   dplyr::group_by(sample_name) %>%
   dplyr::summarise(mean(hit_bool))
-hitdat # why is p150 there if it has no hits?
+hitdat 
 
 substrate <- rawdat %>% 
   dplyr::pull(substrate) %>%
