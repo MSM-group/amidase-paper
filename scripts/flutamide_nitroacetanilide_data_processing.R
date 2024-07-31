@@ -284,7 +284,7 @@ hits <- hits %>%
 table(hits$peak)
 
 # Save the hits dataset as a CSV file
-write.csv(hits, "hits_1250.csv", row.names = FALSE)
+write.csv(hits, "output/hits_1250.csv", row.names = FALSE)
 
 
 
