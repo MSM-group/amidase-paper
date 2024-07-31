@@ -77,4 +77,4 @@ combined_plot <- p1 | p2 + plot_layout(widths = c(1, 1))
 print(combined_plot)
 
 # Save the combined plot to a file
-ggsave("combined_tree.png", plot = combined_plot, width = 16, height = 8, device = "png", dpi=300)
+ggsave("output/combined_tree.png", plot = combined_plot, width = 16, height = 8, device = "png", dpi=300)
