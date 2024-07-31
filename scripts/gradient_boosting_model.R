@@ -44,7 +44,7 @@ df3 <- df2 %>%
 df3$compound # these are the ones which could be parsed
 
 # read in amino acid sequences, subset for those that have a substrate hit
-pnot <- read_xlsx("data/CORRECTED_40_fatty_amidases_from_Thierry_with_genus.xlsx") %>%
+pnot <- read_xlsx("data/AS_enzymes.xlsx") %>%
   dplyr::mutate(p_notation = case_when(grepl("Gord", p_notation) ~ "Gord", 
                                      TRUE ~ p_notation)) %>%
   dplyr::filter(p_notation %in% rawdat$sample_name) %>%
@@ -314,8 +314,8 @@ common_features_xgb <- combined_df_xgb %>%
 
 # Print the common features and their average ranks
 print(common_features_xgb)
-write_csv(common_features_xgb, "20240709_10_xgboosts_common_features_nozerovar_241_removed.csv")
-common_features_xgb <- read_csv("20240709_10_xgboosts_common_features_nozerovar_241_removed.csv")
+# write_csv(common_features_xgb, "output/20240709_10_xgboosts_common_features_nozerovar_241_removed.csv")
+common_features_xgb <- read_csv("output/20240709_10_xgboosts_common_features_nozerovar_241_removed.csv")
 ########################################################
 ### RUN MODEL ONLY WITH ROBUST FEATURES ##########
 ########################################################
@@ -389,7 +389,7 @@ writeData(wb, sheet = "ConfusionMatrixByClass", cm_xgb_filtered_byClass)
 insertImage(wb, sheet = "AUC", file = roc_plot_path, width = 6, height = 4, startRow = 1, startCol = 1)
 
 # Save the workbook
-saveWorkbook(wb, file = "20240709_retrained_xgboost_with_70%_common_features_rem241features.xlsx", overwrite = TRUE)
+saveWorkbook(wb, file = "output/20240709_retrained_xgboost_with_70%_common_features_rem241features.xlsx", overwrite = TRUE)
 
 ###############################################################
 #### RUNNING RANDOM FOREST 10 TIMES TO GET ROBUST FEATURES ####
@@ -449,7 +449,7 @@ common_features_rf <- combined_df_rf %>%
 
 # Print the common features and their average ranks
 print(common_features_rf)
-write_csv(common_features_rf, "20240709_10_random_forests_common_features_nozerovar_241_removed.csv")
+write_csv(common_features_rf, "output/20240709_10_random_forests_common_features_nozerovar_241_removed.csv")
 
 ########################################################
 ### RUN MODEL ONLY WITH ROBUST FEATURES ##########
@@ -476,10 +476,10 @@ rf_model_filtered <- train(
 )
 
 # Save the trained model to an RDS file
-saveRDS(rf_model_filtered, "20240709_random_forest_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
+# saveRDS(rf_model_filtered, "output/20240709_random_forest_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
 
 # Load the model from the RDS file
-rf_model_filtered <- readRDS("20240709_random_forest_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
+rf_model_filtered <- readRDS("output/20240709_random_forest_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
 
 # Generate variable importance plot
 rf_imp_filtered <- varImp(rf_model_filtered, scale = FALSE)
@@ -523,5 +523,5 @@ writeData(wb, sheet = "ConfusionMatrixByClass", cm_rf_filtered_byClass)
 insertImage(wb, sheet = "AUC", file = roc_plot_path, width = 6, height = 4, startRow = 1, startCol = 1)
 
 # Save the workbook
-saveWorkbook(wb, file = "20240709_retrained_random_forest_with_70%_common_features_rem241features.xlsx", overwrite = TRUE)
+saveWorkbook(wb, file = "output/20240709_retrained_random_forest_with_70%_common_features_rem241features.xlsx", overwrite = TRUE)
 
