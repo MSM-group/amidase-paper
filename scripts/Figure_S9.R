@@ -4,7 +4,7 @@ library(reshape2)  # For the melt function
 
 ########### CALCULATE AVERAGE SEQUENCE IDENTITY #########
 # Read the data file into a dataframe
-pid_matrix <- read.table("data/alignment/16_hits_pid.txt", quote="\"")
+pid_matrix <- read.table("data/alignment/pid/16_hits_pid.txt", quote="\"")
 
 # Exclude the first column
 pid_matrix <- pid_matrix[,-1]
