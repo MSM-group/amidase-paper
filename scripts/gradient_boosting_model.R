@@ -44,7 +44,7 @@ df3 <- df2 %>%
 df3$compound # these are the ones which could be parsed
 
 # read in amino acid sequences, subset for those that have a substrate hit
-pnot <- read_xlsx("data/AS_enzymes.xlsx") %>%
+pnot <- read_xlsx("data/AS_library.xlsx") %>%
   dplyr::mutate(p_notation = case_when(grepl("Gord", p_notation) ~ "Gord", 
                                      TRUE ~ p_notation)) %>%
   dplyr::filter(p_notation %in% rawdat$sample_name) %>%

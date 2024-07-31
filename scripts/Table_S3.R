@@ -2,7 +2,7 @@ library(readr)
 library(tidyverse)
 library(openxlsx)
 
-dat <- read_xlsx("data/CORRECTED_40_fatty_amidases_from_Thierry_with_genus.xlsx") %>%
+dat <- read_xlsx("data/AS_library.xlsx") %>%
   select(p_notation,names) %>%
   separate(names, into = c("accession_number", "host"), sep = "_", extra = "merge", remove = FALSE) %>%
   mutate(host = gsub("_", " ", host)) %>%
