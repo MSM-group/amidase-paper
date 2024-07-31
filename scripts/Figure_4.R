@@ -2,7 +2,7 @@ library(ggplot2)
 library(caret)
 
 # Load the model from the RDS file
-xgb_model_filtered <- readRDS("20240709_xgboost_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
+xgb_model_filtered <- readRDS("output/20240709_xgboost_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
 
 # Generate variable importance plot
 xgb_imp_filtered <- varImp(xgb_model_filtered, scale = FALSE)
