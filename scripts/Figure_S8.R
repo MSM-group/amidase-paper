@@ -7,6 +7,7 @@ library(readxl)
 library(tidyr)
 library(ggplot2)
 library(patchwork)
+library(phytools)
 
 # File paths
 tree_file <- "data/trees/240704131026/16_enzyme_substrate_combinations_v20240704.fasta.contree"
