@@ -3,7 +3,7 @@ rm(list = ls())
 #load required packages
 library(pacman)
 pacman::p_load("tidyverse", "readxl", "janitor", "rentrez")
-#Get strain IDs from supplementary data 1 in Thomas-White (2018) paper
+#Get strain IDs from supplementary data 1 in Thomas-White (2018) (doi: 10.1038/s41467-018-03968-5) paper
 metadat <- readxl::read_excel("data/thomas_white_metadata/thomas_white_supplementary_data_1.xlsx") %>%
   janitor::clean_names() %>%
   drop_na(species)
