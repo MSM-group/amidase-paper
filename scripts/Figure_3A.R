@@ -67,10 +67,10 @@ plot_tree_with_custom_size <- function(tree_file, metadata_file, pnot_file, widt
 }
 
 # File paths
-tree_file <- "data/trees/240704131026/16_enzyme_substrate_combinations_v20240704.fasta.contree"
-metadata_file <- "data/20230515_metadata_376_amidases_hit.csv"
-pnot_file <- "data/CORRECTED_40_fatty_amidases_from_Thierry_with_genus.xlsx"
-output_file <- "output/16_hits_phylo_tree_bootstrap.png"
+tree_file <- "data/trees/16_hits_tree/16_enzyme_substrate_combinations_v20240704.fasta.contree"
+metadata_file <- "data/trees/20230515_metadata_376_amidases_hit.csv"
+pnot_file <- "data/AS_library.xlsx"
+output_file <- "output/Figure_3A.png"
 
 # Example usage of the function
 plot_tree_with_custom_size(tree_file, metadata_file, pnot_file, width = 10, height = 8, output_file, 

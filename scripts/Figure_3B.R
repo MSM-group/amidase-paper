@@ -11,7 +11,7 @@ plot_heatmap_with_bars <- function(data_file, width, height, label_size, output_
   binary_df <- read_csv(data_file)
   
   # Reverse the order of the samples to match the tree (reversed order)
-  ordered_samples <- c("p109", "p151", "p168", "p182", "p167", "p117", "p118", "p197", "p198", "p148", "p128", "p131", "p140", "p162", "p156", "p161")
+  ordered_samples <- c("P109", "P151", "P168", "P182", "P167", "P117", "P118", "P197", "P198", "P148", "P128", "P131", "P140", "P162", "P156", "P161")
   
   # Prepare the data for the heatmap
   heatmap_data <- binary_df %>%
@@ -122,7 +122,7 @@ plot_heatmap_with_bars <- function(data_file, width, height, label_size, output_
 }
 
 # Example usage of the function
-data_file <- "data/screening_hits/20240708_hits_matrix_binary_df.csv"
-output_file <- "output/heatmap_with_bars_gradient.png"
+data_file <- "data/processed/hits_matrix_binary_df.csv"
+output_file <- "output/Figure_3B.png"
 
 plot_heatmap_with_bars(data_file, width = 7, height = 9, label_size = 12, output_file = output_file)

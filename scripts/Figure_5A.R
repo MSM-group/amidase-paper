@@ -1,6 +1,7 @@
 library(ggmsa)
 library(ggplot2)
 library(gridExtra)
+library(Biostrings)
 
 # Function to plot MSA
 plot_msa <- function(alignment_file, ordered_samples, start_pos, end_pos, positions_per_row, label_positions, width, height, label_size, output_file) {
@@ -37,8 +38,8 @@ plot_msa <- function(alignment_file, ordered_samples, start_pos, end_pos, positi
 }
 
 # Example usage
-alignment_file <- "data/alignment/16_enzyme_substrate_combinations_v20240704.fasta"
-ordered_samples <- c("p161", "p156", "p162", "p140", "p131", "p128", "p148", "p198", "p197", "p118", "p117", "p167", "p182", "p168", "p151", "p109")
+alignment_file <- "data/alignment/16_enzyme_substrate_combinations.fasta"
+ordered_samples <- c("P161", "P156", "P162", "P140", "P131", "P128", "P148", "P198", "P197", "P118", "P117", "P167", "P182", "P168", "P151", "P109")
 start_pos <- 226
 end_pos <- 387
 positions_per_row <- 81
@@ -46,6 +47,6 @@ label_positions <- c(226,256,266,269,300,329,366,368)
 width <- 20
 height <- 10
 label_size <- 7
-output_file <- "alignment_plot.png"
+output_file <- "output/Figure_5A.png"
 
 plot_msa(alignment_file, ordered_samples, start_pos, end_pos, positions_per_row, label_positions, width, height, label_size, output_file)

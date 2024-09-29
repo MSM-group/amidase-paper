@@ -2,7 +2,7 @@ library(ggplot2)
 library(caret)
 
 # Load the model from the RDS file
-xgb_model_filtered <- readRDS("output/20240709_xgboost_retrain_with_70%_common_features_zerovar_241_removed_features.rds")
+xgb_model_filtered <- readRDS("output/machine_learning/xgboost_final_model.rds")
 
 # Generate variable importance plot
 xgb_imp_filtered <- varImp(xgb_model_filtered, scale = FALSE)
@@ -61,5 +61,5 @@ print(importance_plot)
 
 
 # Save the plot as a high-quality, square image
-ggsave("output/20240718_variable_importance_xgboost_plot.png", plot = importance_plot, width = 15, height = 10, dpi = 300)
+ggsave("output/Figure_4.png", plot = importance_plot, width = 15, height = 10, dpi = 300)
 
