@@ -111,7 +111,6 @@ dat <- learndat %>%
   select(-all_of(which_rem)) %>%
   mutate(truth = factor(ifelse(hit_bool == 1, "yes", "no"))) %>%
   select(-hit_bool) %>%
-  filter(!is.na(smiles)) %>%
   select(-smiles, -MF, -seq)
 
 ################################################
