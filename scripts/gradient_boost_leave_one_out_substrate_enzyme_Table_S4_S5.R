@@ -111,7 +111,6 @@ dat <- learndat %>%
   select(-all_of(which_rem)) %>%
   mutate(truth = factor(ifelse(hit_bool == 1, "yes", "no"))) %>%
   select(-hit_bool) %>%
-  filter(!is.na(smiles)) %>%
   select(-smiles, -MF, -seq)
 
 ########################################################
@@ -123,7 +122,7 @@ cmpnds <- unique(word(dat$id, sep = "_", 2))
 
 # Create empty lists to store results
 by_class_metrics_list <- list()
-feature_importance_df <- data.frame()
+feature_importance_list <- list()  # List to store feature importance
 
 set.seed(123)
 
@@ -192,40 +191,45 @@ for (i in 1:length(cmpnds)) {
   # Append to list
   by_class_metrics_list[[loo_cmpnd]] <- by_class_metrics
   
-  print(paste("Metrics stored for", loo_cmpnd))
+  # Get feature importance
+  importance <- varImp(xgb_model)$importance
+  importance$Feature <- rownames(importance)
+  importance <- importance[order(-importance$Overall), ]
+  importance$Compound <- loo_cmpnd  # Add the compound name
+  
+  # Append to feature importance list
+  feature_importance_list[[loo_cmpnd]] <- importance
+  
+  print(paste("Metrics and feature importance stored for", loo_cmpnd))
 }
 
 # Combine byClass metrics for all compounds into a dataframe
 by_class_metrics_df <- bind_rows(by_class_metrics_list)
 
-# Save prediction results to file
-write.table(by_class_metrics_df, "output/leave_one_compound_out_metrics.csv", sep = ";", row.names = FALSE, col.names = TRUE, quote = FALSE)
+# Combine feature importance data frames
+feature_importance_df <- bind_rows(feature_importance_list)
+
+# Save prediction results and feature importance to Excel file
+wb <- createWorkbook()
+addWorksheet(wb, "Metrics")
+addWorksheet(wb, "Feature Importance")
+writeData(wb, sheet = "Metrics", by_class_metrics_df)
+writeData(wb, sheet = "Feature Importance", feature_importance_df)
+saveWorkbook(wb, file = "output/leave_one_compound_out_results.xlsx", overwrite = TRUE)
 
 ######################################################
-###### LEAVE ONE ENZYME OUT ##########################
+####### LEAVE ONE ENZYME OUT #########################
 ######################################################
+
 # Extract the enzymes from the 'id' column
 enzymes <- unique(word(dat$id, sep = "_", 1))  # Extract the enzyme part
 
 # Create empty lists to store results
 by_class_metrics_list <- list()
-feature_importance_df <- data.frame()
+feature_importance_list <- list()  # List to store feature importance
 
 # Set random seed
 set.seed(123)
-
-# Define the grid for xgbDART
-xgb_grid <- expand.grid(
-  nrounds = c(50, 100),  # fewer boosting iterations
-  max_depth = c(3, 6),
-  eta = c(0.1, 0.3),  # learning rate
-  gamma = c(0, 1),
-  colsample_bytree = c(0.7),
-  min_child_weight = c(1),
-  subsample = c(0.7),
-  rate_drop = c(0.1),  # specific to DART
-  skip_drop = c(0.1)   # specific to DART
-)
 
 # Loop through each enzyme and leave it out for testing
 for (i in 1:length(enzymes)) {
@@ -253,9 +257,7 @@ for (i in 1:length(enzymes)) {
   df_train <- data.frame(x_train, stringsAsFactors = FALSE, row.names = dat_train$id)
   df_test <- data.frame(x_test, stringsAsFactors = FALSE, row.names = dat_test$id)
   
-# XGBoost
-  
-  # Train the xgbDART model
+  # XGBoost training
   xgb_model <- train(
     x = df_train,
     y = y_train,
@@ -281,11 +283,28 @@ for (i in 1:length(enzymes)) {
   # Append to list
   by_class_metrics_list[[loo_enzyme]] <- by_class_metrics
   
-  print(paste("Metrics stored for", loo_enzyme))
+  # Get feature importance
+  importance <- varImp(xgb_model)$importance
+  importance$Feature <- rownames(importance)
+  importance <- importance[order(-importance$Overall), ]
+  importance$Enzyme <- loo_enzyme  # Add the enzyme name
+  
+  # Append to feature importance list
+  feature_importance_list[[loo_enzyme]] <- importance
+  
+  print(paste("Metrics and feature importance stored for", loo_enzyme))
 }
 
 # Combine byClass metrics for all enzymes into a dataframe
 by_class_metrics_df <- bind_rows(by_class_metrics_list)
 
-# Save byClass metrics results to a CSV file with semicolon separation
-write.table(by_class_metrics_df, "output/leave_one_enzyme_out_metrics.csv", sep = ";", row.names = FALSE, col.names = TRUE, quote = FALSE)
+# Combine feature importance data frames
+feature_importance_df <- bind_rows(feature_importance_list)
+
+# Save prediction results and feature importance to Excel file
+wb <- createWorkbook()
+addWorksheet(wb, "Metrics")
+addWorksheet(wb, "Feature Importance")
+writeData(wb, sheet = "Metrics", by_class_metrics_df)
+writeData(wb, sheet = "Feature Importance", feature_importance_df)
+saveWorkbook(wb, file = "output/leave_one_enzyme_out_results.xlsx", overwrite = TRUE)
