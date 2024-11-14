@@ -164,7 +164,7 @@ gg_butyrate <- ggplot(full_data_butyrate, aes(x = variable, y = mean_normalized,
   geom_point(size = 3, color = "black") +
   geom_errorbar(aes(ymin = mean_normalized - (2 * sd), ymax = mean_normalized + (2 * sd)),
                 width = 0.2, color = "black") +
-  labs(x = "Enzyme", y = "Normalized OD410") +
+  labs(x = "Enzyme", y = "Normalized OD410", size = 16) +
   scale_fill_viridis(discrete = TRUE) +
   facet_wrap(~ set, scales = "free_x", nrow = 1) +
   geom_hline(data = dat_time_butyrate,
@@ -173,43 +173,65 @@ gg_butyrate <- ggplot(full_data_butyrate, aes(x = variable, y = mean_normalized,
   geom_hline(data = dat_time_butyrate,
              aes(yintercept = mean_normalized - (2 * sd), group = set),
              linetype = "dotted", color = "red", size = 1) +
+  scale_y_continuous(
+    limits = c(-1, 2),                            # Set y-axis limits
+    breaks = seq(-1, 2, by = 0.2)                 # Set y-axis ticks every 0.2
+  ) +
   theme_minimal() +
   theme(
     legend.position = "none",
     strip.text = element_blank(),
-    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+    axis.text.y = element_text(size = 16),
+    axis.title.x = element_text(size = 16),
+    axis.title.y = element_text(size = 16),
     panel.spacing = unit(1, "lines")
-  ) +
-  coord_cartesian(ylim = c(NA, 2))
+  )
 
-# Save the plot
-ggsave("output/Figure_S5_4NP-butyrate.png", plot = gg_butyrate, width = 11, height = 8, dpi = 300)
+gg_butyrate
+
+# Save the plot with updated dimensions
+ggsave("output/Figure_S5_4NP-butyrate.png", plot = gg_butyrate, width = 14, height = 5, dpi = 300)
 
 # Create the plot for 4NP-trimethylacetate
 gg_trimethyl <- ggplot(full_data_trimethyl, aes(x = variable, y = mean_normalized, fill = variable)) +
   geom_point(size = 3, color = "black") +
-  geom_errorbar(aes(ymin = mean_normalized - (2 * sd), ymax = mean_normalized + (2 * sd)),
-                width = 0.2, color = "black") +
-  labs(x = "Enzyme", y = "Normalized OD410") +
+  geom_errorbar(
+    aes(ymin = mean_normalized - (2 * sd), ymax = mean_normalized + (2 * sd)),
+    width = 0.2, color = "black"
+  ) +
+  labs(x = "Enzyme", y = "Normalized OD410", size = 16) +
   scale_fill_viridis(discrete = TRUE) +
   facet_wrap(~ set, scales = "free_x", nrow = 1) +
-  geom_hline(data = dat_time_trimethyl,
-             aes(yintercept = mean_normalized + (2 * sd), group = set),
-             linetype = "dotted", color = "red", size = 1) +
-  geom_hline(data = dat_time_trimethyl,
-             aes(yintercept = mean_normalized - (2 * sd), group = set),
-             linetype = "dotted", color = "red", size = 1) +
+  geom_hline(
+    data = dat_time_trimethyl,
+    aes(yintercept = mean_normalized + (2 * sd), group = set),
+    linetype = "dotted", color = "red", size = 1
+  ) +
+  geom_hline(
+    data = dat_time_trimethyl,
+    aes(yintercept = mean_normalized - (2 * sd), group = set),
+    linetype = "dotted", color = "red", size = 1
+  ) +
+  scale_y_continuous(
+    limits = c(-1, 2),                            # Set y-axis limits
+    breaks = seq(-1, 2, by = 0.4)                 # Set y-axis ticks every 0.4
+  ) +
   theme_minimal() +
   theme(
     legend.position = "none",
     strip.text = element_blank(),
-    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+    axis.text.y = element_text(size = 16),
+    axis.title.x = element_text(size = 16),  # Increase x-axis title size
+    axis.title.y = element_text(size = 16),  # Increase y-axis title size
     panel.spacing = unit(1, "lines")
-  ) +
-  coord_cartesian(ylim = c(NA, 2))
+  )
 
-# Save the plot
-ggsave("output/Figure_S5_4NP-trimethylacetate.png", plot = gg_trimethyl, width = 11, height = 8, dpi = 300)
+gg_trimethyl
+
+# Save the plot with updated dimensions
+ggsave("output/Figure_S5_4NP-trimethylacetate.png", plot = gg_trimethyl, width = 14, height = 5, dpi = 300)
 
 # Export hits
 # Combine dat_time for both substrates

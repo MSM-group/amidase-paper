@@ -39,6 +39,10 @@ colnames(melted_pid_matrix)[1] <- "Protein1"
 colnames(melted_pid_matrix)[2] <- "Protein2"
 colnames(melted_pid_matrix)[3] <- "Identity"
 
+# Convert entries in Protein1 and Protein2 columns to uppercase
+melted_pid_matrix$Protein1 <- toupper(melted_pid_matrix$Protein1)
+melted_pid_matrix$Protein2 <- toupper(melted_pid_matrix$Protein2)
+
 ggplot(data=melted_pid_matrix, aes(x=Protein1, y=Protein2, fill=Identity)) +
   geom_tile() +
   scale_fill_gradient(low="white", high="blue") +

@@ -58,19 +58,25 @@ ggsave("output/Figure_S13A.png", plot = p, width = 12, height = 12, dpi = 600)
 dat3 <- dat2 %>%
   select(-human, -animal)
 
-long_df <- melt(dat3, id.vars = c("shorthand", "Genus", "enzyme"))
-
 p <- ggplot(data = long_df, 
             aes(y = value, axis1 = enzyme, axis2 = variable)) +
   geom_alluvium(aes(fill = enzyme), alpha = 0.8, width = 0.1) +
-  geom_stratum(width = 0.3) +
-  geom_text(stat = "stratum", aes(label = paste0(after_stat(stratum), ": ", after_stat(count), " (", round(after_stat(prop) * 100, 1), "%)")), size = 3.5) +
+  geom_stratum(width = 0.35) +
+  geom_text(
+    stat = "stratum", 
+    aes(label = ifelse(after_stat(count) > 3, 
+                       paste0(after_stat(stratum), ": ", after_stat(count), 
+                              " (", round(after_stat(prop) * 100, 1), "%)"), 
+                       "")), 
+    size = 3.5
+  ) +
   scale_fill_viridis_d(option = "viridis") +
   theme_void() +
   theme(legend.position = "none")
 
 p
 
+# Save the plot
 ggsave("output/Figure_6.png", plot = p, width = 12, height = 8, dpi = 600)
 
 ### only the most promiscuous enzymes ###

@@ -162,7 +162,7 @@ gg_flutamide <- ggplot(data_flutamide, aes(x = variable, y = mean_normalized, fi
   geom_point(size = 3, color = "black") +
   geom_errorbar(aes(ymin = mean_normalized - (2 * sd), ymax = mean_normalized + (2 * sd)),
                 width = 0.2, color = "black") +
-  labs(x = "Enzyme", y = "Normalized OD410") +
+  labs(x = "Enzyme", y = "Normalized OD410", size = 16) +
   scale_fill_viridis(discrete = TRUE) +
   facet_wrap(~ set, scales = "free_x", nrow = 1) +
   geom_hline(data = dat_time_flutamide,
@@ -171,24 +171,32 @@ gg_flutamide <- ggplot(data_flutamide, aes(x = variable, y = mean_normalized, fi
   geom_hline(data = dat_time_flutamide,
              aes(yintercept = mean_normalized - (2 * sd), group = set),
              linetype = "dotted", color = "red", size = 1) +
+  scale_y_continuous(
+    limits = c(-0.4, 0.8),                            # Set y-axis limits
+    breaks = seq(-0.4, 0.8, by = 0.2)   
+  ) +  
   theme_minimal() +
   theme(
     legend.position = "none",
     strip.text = element_blank(),
-    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+    axis.text.y = element_text(size = 16),
+    axis.title.x = element_text(size = 16),  # Increase x-axis title size
+    axis.title.y = element_text(size = 16),  # Increase y-axis title size
     panel.spacing = unit(1, "lines")
-  ) +
-  coord_cartesian(ylim = c(NA, 1))
+  ) 
+
+gg_flutamide
 
 # Save the plot
-ggsave("output/Figure_S5_flutamide.png", plot = gg_flutamide, width = 11, height = 8, dpi = 300)
+ggsave("output/Figure_S5_flutamide.png", plot = gg_flutamide, width = 14, height = 5, dpi = 300)
 
 # Create the plot for nitroacetanilide
 gg_nitroacetanilide <- ggplot(data_nitroacetanilide, aes(x = variable, y = mean_normalized, fill = variable)) +
   geom_point(size = 3, color = "black") +
   geom_errorbar(aes(ymin = mean_normalized - (2 * sd), ymax = mean_normalized + (2 * sd)),
                 width = 0.2, color = "black") +
-  labs(x = "Enzyme", y = "OD410") +
+  labs(x = "Enzyme", y = "Normalized OD410", size = 16) +
   scale_fill_viridis(discrete = TRUE) +
   facet_wrap(~ set, scales = "free_x", nrow = 1) +
   geom_hline(data = dat_time_nitroacetanilide,
@@ -197,18 +205,25 @@ gg_nitroacetanilide <- ggplot(data_nitroacetanilide, aes(x = variable, y = mean_
   geom_hline(data = dat_time_nitroacetanilide,
              aes(yintercept = mean_normalized - (2 * sd), group = set),
              linetype = "dotted", color = "red", size = 1) +
+  scale_y_continuous(
+    limits = c(-0.4, 1),                            # Set y-axis limits
+    breaks = seq(-0.4, 1, by = 0.2)                 # Set y-axis ticks every 0.2
+  ) +
   theme_minimal() +
   theme(
     legend.position = "none",
     strip.text = element_blank(),
-    axis.text.x = element_text(angle = 90, hjust = 1),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 14),  # Match x-axis text size
+    axis.text.y = element_text(size = 16),                          # Match y-axis text size
+    axis.title.x = element_text(size = 16),                         # Increase x-axis title size
+    axis.title.y = element_text(size = 16),                         # Increase y-axis title size
     panel.spacing = unit(1, "lines")
-  ) +
-  coord_cartesian(ylim = c(NA, 1))
+  )
 
-# Save the plot
-ggsave("output/Figure_S5_nitroacetanilide.png", plot = gg_nitroacetanilide, width = 11, height = 8, dpi = 300)
+gg_nitroacetanilide
 
+# Save the plot with updated dimensions
+ggsave("output/Figure_S5_nitroacetanilide.png", plot = gg_nitroacetanilide, width = 14, height = 5, dpi = 300)
 # Filter the hits
 # Combine dat_time for both substrates
 dat_time_combined <- bind_rows(dat_time_flutamide, dat_time_nitroacetanilide)

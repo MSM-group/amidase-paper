@@ -162,25 +162,33 @@ lower_bound_S146A <- mean_S146A - (2 * sd_S146A)
 # Create the plot
 gg <- ggplot(full_data, aes(x = variable, y = rolling_mean)) +
   geom_point(size = 3, color = "black") +
-  geom_errorbar(aes(ymin = rolling_mean - (2 * rolling_sd), ymax = rolling_mean + (2 * rolling_sd)), width = 0.2, color = "black") +
-  geom_errorbar(data = dat_S146A, aes(ymin = rolling_mean - (2 * sd_S146A), ymax = rolling_mean + (2 * sd_S146A)), width = 0.2, color = "black") +
+  geom_errorbar(aes(ymin = rolling_mean - (2 * rolling_sd), ymax = rolling_mean + (2 * rolling_sd)),
+                width = 0.2, color = "black") +
+  geom_errorbar(data = dat_S146A,
+                aes(ymin = rolling_mean - (2 * sd_S146A), ymax = rolling_mean + (2 * sd_S146A)),
+                width = 0.2, color = "black") +
   geom_hline(yintercept = upper_bound_S146A, linetype = "dashed", color = "red", size = 1) +
   geom_hline(yintercept = lower_bound_S146A, linetype = "dashed", color = "red", size = 1) +
-  labs(x = "Enzyme", y = "Normalized OD400") +
+  labs(x = "Enzyme", y = "Normalized OD400", size = 16) +
+  scale_y_continuous(
+    limits = c(-0.4, 1.1),                            # Set y-axis limits
+    breaks = seq(-0.4, 1.2, by = 0.2)                 # Set y-axis ticks every 0.2
+  ) +
   theme_minimal() +
   theme(
     legend.position = "none",
-    axis.text = element_text(color = "black"),
-    axis.title = element_text(color = "black"),
-    strip.text = element_text(size = 10, face = "bold", color = "black"),
-    strip.background = element_rect(fill = "lightblue", color = "grey", size = 0.5),
-    axis.text.x = element_text(angle = 90, hjust = 1, color = "black"),
-    plot.title = element_text(color = "black", hjust = 0.5)
-  ) +
-  coord_cartesian(ylim = c(NA, 1))
+    strip.text = element_blank(),
+    axis.text.x = element_text(angle = 90, hjust = 1, size = 14),
+    axis.text.y = element_text(size = 16),
+    axis.title.x = element_text(size = 16),  # Increase x-axis title size
+    axis.title.y = element_text(size = 16),  # Increase y-axis title size
+    panel.spacing = unit(1, "lines")
+  )
 
-# Save the plot
-ggsave("output/Figure_S5_paracetamol.png", plot = gg, width = 10, height = 8, dpi = 300)
+gg
+
+# Save the plot with updated dimensions
+ggsave("output/Figure_S5_paracetamol.png", plot = gg, width = 14, height = 5, dpi = 300)
 
 # Identify the hits
 threshold_S146A <- 2 * sd_S146A
