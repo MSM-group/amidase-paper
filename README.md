@@ -3,9 +3,9 @@
 This repository contains the data analysis and figure plotting scripts for the manuscript:
 
 **"Machine learning reveals signature of promiscuous microbial amidases for micropollutant biotransformations"**  
-- ** Authors: Thierry D. Marti, Diana Schweizer, Yaochun Yu, Milo R. Schärer, Silke I. Probst, Serina L. Robinson
-- ** Associated research article is available open access at doi:[10.1021/acsenvironau.4c00066](https://pubs.acs.org/doi/10.1021/acsenvironau.4c00066)
-- ** For questions or inquiries, please contact: serina.robinson[at]eawag.ch
+- Authors: Thierry D. Marti, Diana Schweizer, Yaochun Yu, Milo R. Schärer, Silke I. Probst, Serina L. Robinson
+- Associated research article is available open access at doi: [10.1021/acsenvironau.4c00066](https://pubs.acs.org/doi/10.1021/acsenvironau.4c00066)
+- For questions or inquiries, please contact: serina.robinson[at]eawag.ch
 
 ---
 
